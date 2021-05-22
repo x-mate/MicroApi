@@ -1,4 +1,3 @@
-using AspectCore.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
@@ -13,7 +12,6 @@ namespace AutoApi.Demo
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseServiceContext()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder

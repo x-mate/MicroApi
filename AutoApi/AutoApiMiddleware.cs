@@ -7,11 +7,9 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using AspNetCoreRateLimit;
-using Castle.Core.Internal;
+using AutoApi.HandleResponse;
+using Humanizer;
 using Microsoft.Extensions.Options;
-using Zxw.Framework.NetCore.IDbContext;
-using Zxw.Framework.NetCore.Extensions;
 
 namespace AutoApi
 {
@@ -27,7 +25,7 @@ namespace AutoApi
 
             var controller = context.GetRouteData().Values["controller"]?.ToString();
             var action = context.GetRouteData().Values["action"]?.ToString();
-            if(!controller.IsNullOrEmpty() && !action.IsNullOrEmpty())
+            if(!string.IsNullOrEmpty(controller) && !string.IsNullOrEmpty(action))
                 return;
             
             var method = context.Request.Method;
@@ -39,29 +37,9 @@ namespace AutoApi
                 return;
             }
 
-            var paths = path.Value.Split("/");
+            var reponse = HandleResponseFactory.CreateHandleResponse(context).Execute();
 
-            controller = paths[1];
-
-            var dbcontext = (IDbContextCore)context.RequestServices.GetService(typeof(IDbContextCore));
-
-            if ("GET".Equals(method, StringComparison.OrdinalIgnoreCase))
-            {
-                var sql = $"select * from {controller}";
-                var dt = dbcontext.GetDataTable(sql);
-
-
-                await context.Response.WriteAsync(HandleResponseContent(dt), Encoding.GetEncoding("GB2312"));                
-            }
-        }
-
-        private string HandleResponseContent(object content, string dateFormat = "yyyy-MM-dd")
-        {
-            return JsonConvert.SerializeObject(content, Formatting.Indented, settings: new JsonSerializerSettings()
-            {
-                DateFormatString = dateFormat,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
+            await context.Response.WriteAsync(reponse, Encoding.GetEncoding("GB2312"));                
         }
     }
 
