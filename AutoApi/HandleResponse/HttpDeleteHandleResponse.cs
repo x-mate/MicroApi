@@ -1,76 +1,29 @@
 ﻿using System;
-using System.Data.Common;
-using System.Data.SqlClient;
-using FirebirdSql.Data.FirebirdClient;
-using FreeSql;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
-using MySqlConnector;
-using Npgsql;
-using Oracle.ManagedDataAccess.Client;
-using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace AutoApi.HandleResponse
 {
-    public class HttpGetHandleResponse:BaseHandleResponse
+    public class HttpDeleteHandleResponse : BaseHandleResponse
     {
-        public HttpGetHandleResponse(HttpContext context) : base(context)
+        public HttpDeleteHandleResponse(HttpContext context) : base(context)
         {
         }
 
         public override object Execute()
         {
+            var db = GetQueryFactory();
 
             var table = GetTableName();
 
-            var db = GetQueryFactory();
-
             var query = db.Query(table);
-
-            int? page = null;
-            int? size = null;
-            int? offset = null;
 
             foreach (var item in Context.Request.Query)
             {
-                #region 分页
-
-                if ("page".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    page = item.Value.ToString().ToInt(1);
-                    continue;
-                }
-                if ("offset".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    offset = item.Value.ToString().ToInt(10);
-                    continue;
-                }
-                if ("size".Equals(item.Key, StringComparison.OrdinalIgnoreCase)|| "limit".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    size = item.Value.ToString().ToInt(10);
-                    continue;
-                }
-
-                #endregion
-
-                #region 排序
-
-                //正序
-                if ("orderAsc".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    query = query.OrderBy(item.Value.ToString().Split(","));
-                    continue;
-                }
-                //倒序
-                if ("orderDesc".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    query = query.OrderByDesc(item.Value.ToString().Split(","));
-                    continue;
-                }
-
-                #endregion
-
                 #region 特殊运算，比如大于等于、小于等于、大于、小于、IN查询
 
                 //大于等于
@@ -104,7 +57,7 @@ namespace AutoApi.HandleResponse
                 //在范围内
                 if (item.Key.EndsWith(".in", StringComparison.OrdinalIgnoreCase))
                 {
-                    query.WhereIn(item.Key.Replace(".in", "", StringComparison.OrdinalIgnoreCase), 
+                    query.WhereIn(item.Key.Replace(".in", "", StringComparison.OrdinalIgnoreCase),
                         item.Value.ToString().Split(","));
                     continue;
                 }
@@ -118,18 +71,10 @@ namespace AutoApi.HandleResponse
 
                 #endregion
 
-                query = query.Where(item.Key, item.Value[0]);
+                query = query.Where(item.Key, item.Value.ToString());
             }
 
-            if (page.HasValue || size.HasValue)
-            {
-                if (!offset.HasValue)
-                    offset = ((page ?? 1) - 1) * (size ?? 10);
-                query = query.Skip(offset.Value).Take(size ?? 10);
-            }
-
-            var dt = query.Get();
-            return dt;
+            return query.Delete();
         }
     }
 }

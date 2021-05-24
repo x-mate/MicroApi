@@ -1,76 +1,32 @@
 ﻿using System;
-using System.Data.Common;
-using System.Data.SqlClient;
-using FirebirdSql.Data.FirebirdClient;
-using FreeSql;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
-using MySqlConnector;
-using Npgsql;
-using Oracle.ManagedDataAccess.Client;
-using SqlKata.Compilers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SqlKata.Execution;
 
 namespace AutoApi.HandleResponse
 {
-    public class HttpGetHandleResponse:BaseHandleResponse
+    public class HttpPutHandleResponse : BaseHandleResponse
     {
-        public HttpGetHandleResponse(HttpContext context) : base(context)
+        public HttpPutHandleResponse(HttpContext context) : base(context)
         {
         }
 
         public override object Execute()
         {
+            var db = GetQueryFactory();
 
             var table = GetTableName();
 
-            var db = GetQueryFactory();
-
             var query = db.Query(table);
-
-            int? page = null;
-            int? size = null;
-            int? offset = null;
 
             foreach (var item in Context.Request.Query)
             {
-                #region 分页
-
-                if ("page".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    page = item.Value.ToString().ToInt(1);
-                    continue;
-                }
-                if ("offset".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    offset = item.Value.ToString().ToInt(10);
-                    continue;
-                }
-                if ("size".Equals(item.Key, StringComparison.OrdinalIgnoreCase)|| "limit".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    size = item.Value.ToString().ToInt(10);
-                    continue;
-                }
-
-                #endregion
-
-                #region 排序
-
-                //正序
-                if ("orderAsc".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    query = query.OrderBy(item.Value.ToString().Split(","));
-                    continue;
-                }
-                //倒序
-                if ("orderDesc".Equals(item.Key, StringComparison.OrdinalIgnoreCase))
-                {
-                    query = query.OrderByDesc(item.Value.ToString().Split(","));
-                    continue;
-                }
-
-                #endregion
-
                 #region 特殊运算，比如大于等于、小于等于、大于、小于、IN查询
 
                 //大于等于
@@ -104,7 +60,7 @@ namespace AutoApi.HandleResponse
                 //在范围内
                 if (item.Key.EndsWith(".in", StringComparison.OrdinalIgnoreCase))
                 {
-                    query.WhereIn(item.Key.Replace(".in", "", StringComparison.OrdinalIgnoreCase), 
+                    query.WhereIn(item.Key.Replace(".in", "", StringComparison.OrdinalIgnoreCase),
                         item.Value.ToString().Split(","));
                     continue;
                 }
@@ -118,18 +74,25 @@ namespace AutoApi.HandleResponse
 
                 #endregion
 
-                query = query.Where(item.Key, item.Value[0]);
+                query = query.Where(item.Key, item.Value.ToString());
             }
 
-            if (page.HasValue || size.HasValue)
+            //获取body
+            var sr = new StreamReader(Context.Request.Body);
+            var body = sr.ReadToEndAsync().Result;
+            Context.Request.Body.Seek(0, SeekOrigin.Begin);
+
+            var entity = (JObject)JsonConvert.DeserializeObject(body);
+            var t = new List<KeyValuePair<string, object>>();
+            foreach (var p in entity.Properties())
             {
-                if (!offset.HasValue)
-                    offset = ((page ?? 1) - 1) * (size ?? 10);
-                query = query.Skip(offset.Value).Take(size ?? 10);
+                t.Add(new KeyValuePair<string, object>(p.Name, ((JValue)entity[p.Name]).Value));
             }
 
-            var dt = query.Get();
-            return dt;
+
+            var ret = query.Update(t);
+
+            return ret;
         }
     }
 }

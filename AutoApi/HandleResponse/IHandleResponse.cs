@@ -11,6 +11,6 @@ namespace AutoApi.HandleResponse
     public interface IHandleResponse
     {
         public HttpContext Context { get; set; }
-        public string Execute();
+        public object Execute();
     }
 }

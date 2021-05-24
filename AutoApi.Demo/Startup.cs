@@ -69,6 +69,7 @@ namespace AutoApi.Demo
             {
                 endpoints.MapControllers();
             });
+
             app.UseAutoRestfulApi();
         }
     }
