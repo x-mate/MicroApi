@@ -12,5 +12,6 @@ namespace AutoApi.HandleResponse
     {
         public HttpContext Context { get; set; }
         public object Execute();
+        public string TableName { get; }
     }
 }

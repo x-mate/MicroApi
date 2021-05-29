@@ -1,44 +1,60 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Net;
 using FirebirdSql.Data.FirebirdClient;
 using FreeSql;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 using MySqlConnector;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Npgsql;
 using Oracle.ManagedDataAccess.Client;
+using SqlKata;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace AutoApi.HandleResponse
 {
-    public abstract class BaseHandleResponse:IHandleResponse
+    public abstract class BaseHandleResponse : IHandleResponse
     {
         public HttpContext Context { get; set; }
         public abstract object Execute();
+        public string TableName { get; }
+        public AutoApiOption ApiOption { get; set; }
 
         public BaseHandleResponse(HttpContext context)
         {
             this.Context = context;
+            this.TableName = GetTableName();
+            this.ApiOption =
+                ((IOptions<AutoApiOption>) context.RequestServices.GetService(typeof(IOptions<AutoApiOption>)))?.Value;
         }
 
-        protected string GetTableName()
+        private string GetTableName()
         {
-            var path = Context.Request.Path;
+            var path = this.Context.Request.Path;
 
             var paths = path.Value.Split("/");
 
-            return paths[1];
+            if (paths.Length < 2)
+            {
+                throw new Exception("非法请求，api请求路径格式为/api/{TableName},且TableName不能为空。");//api请求路径格式为/api/{TableName}
+            }
+            var table = paths[1];
+            if (table.IsNullOrWhiteSpace())
+            {
+                throw new Exception("非法请求，api请求路径格式为/api/{TableName},且TableName不能为空。");//api请求路径格式为/api/{TableName}
+            }
+
+            return table;
         }
 
 
 
-        protected QueryFactory GetQueryFactory()
+        protected Query GetQuery()
         {
-            var freeSql = (IFreeSql)Context.RequestServices.GetService(typeof(IFreeSql));
+            var freeSql = (IFreeSql) Context.RequestServices.GetService(typeof(IFreeSql));
 
             var conStr = freeSql.Ado.ConnectionString;
 
@@ -87,7 +103,7 @@ namespace AutoApi.HandleResponse
                 }
             };
 
-            return db;
+            return db.Query(this.TableName);
         }
     }
 }

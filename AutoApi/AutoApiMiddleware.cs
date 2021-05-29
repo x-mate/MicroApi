@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AutoApi.HandleResponse;
+using FreeRedis;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -70,12 +73,43 @@ namespace AutoApi
 
     public static class AutoApiMiddlewareExtensions
     {
-        public static IServiceCollection AddAutoRestfulApi(this IServiceCollection services, AutoRestfulApiOption option = null)
+        public static IServiceCollection AddAutoRestfulApi([NotNull] this IServiceCollection services,
+            [NotNull] AutoApiOption option)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            if (option != null)
+            if (option == null)
             {
-                services.ConfigureOptions(option);
+                throw new ArgumentNullException(nameof(option));
+            }
+
+            if (option.DbMasterConnectionString.IsNullOrWhiteSpace())
+                throw new ArgumentNullException(nameof(option.DbMasterConnectionString));
+
+            var freeSqlBuilder = new FreeSql.FreeSqlBuilder()
+                .UseConnectionString(option.DbType, option.DbMasterConnectionString)
+                ;
+            if (option.DbSlaveConnectionStrings?.Length > 0)
+            {
+                freeSqlBuilder = freeSqlBuilder.UseSlave(option.DbSlaveConnectionStrings);
+            }
+
+            var freeSql = freeSqlBuilder.Build();
+            freeSql.Aop.CurdBefore += (s, e) =>
+            {
+                //记录sql
+                Console.WriteLine(e.Sql);
+            };
+            services.AddSingleton<IFreeSql>(freeSql);
+
+            if (option.EnableGetCache && option.RedisConnectionStrings?.Length>0)
+            {
+                var redisClient = new RedisClient(option.RedisConnectionStrings[0])
+                {
+                    Serialize = JsonConvert.SerializeObject,
+                    Deserialize = JsonConvert.DeserializeObject
+                };
+
+                services.AddSingleton<RedisClient>(redisClient);
             }
 
             return services;

@@ -16,9 +16,7 @@ namespace AutoApi.HandleResponse
 
         public override object Execute()
         {
-            var db = GetQueryFactory();
-
-            var table = GetTableName();
+            var query = GetQuery();
 
             //获取body
             var sr = new StreamReader(Context.Request.Body);
@@ -33,7 +31,7 @@ namespace AutoApi.HandleResponse
                 t.Add(new KeyValuePair<string, object>(p.Name, ((JValue)entity[p.Name]).Value));
             }
             
-            var ret = db.Query(table).Insert(t);
+            var ret = query.Insert(t);
 
             return ret;
         }

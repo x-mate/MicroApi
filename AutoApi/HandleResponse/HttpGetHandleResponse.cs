@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq;
 using FirebirdSql.Data.FirebirdClient;
+using FreeRedis;
 using FreeSql;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Options;
 using MySqlConnector;
 using Npgsql;
 using Oracle.ManagedDataAccess.Client;
@@ -22,11 +26,7 @@ namespace AutoApi.HandleResponse
         public override object Execute()
         {
 
-            var table = GetTableName();
-
-            var db = GetQueryFactory();
-
-            var query = db.Query(table);
+            var query = GetQuery();
 
             int? page = null;
             int? size = null;
@@ -128,6 +128,24 @@ namespace AutoApi.HandleResponse
                 query = query.Skip(offset.Value).Take(size ?? 10);
             }
 
+            if (ApiOption != null && ApiOption.EnableGetCache)
+            {
+                var redisClient = (RedisClient) Context.RequestServices.GetService(typeof(RedisClient));
+                if (redisClient != null)
+                {
+                    var cacheKey = new CacheKey(TableName, Context.Request.Query.Keys.ToArray(),
+                        Context.Request.Query.Select(q => q.Value.ToString()).ToArray()).GetCacheKey();
+                    var cacheValue = redisClient.Get<IEnumerable<dynamic>>(cacheKey);
+                    if (cacheValue == null)
+                    {
+                        cacheValue = query.Get();
+                        redisClient.Set(cacheKey, cacheValue, ApiOption.CacheExpiredSeconds);
+                    }
+
+                    return cacheValue;
+                }
+            }
+            
             var dt = query.Get();
             return dt;
         }

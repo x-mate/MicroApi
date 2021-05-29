@@ -1,4 +1,5 @@
 using System;
+using FreeRedis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace AutoApi.Demo
 {
@@ -36,16 +38,13 @@ namespace AutoApi.Demo
         private void InitWorks(IServiceCollection services)
         {
             var dbConnectionString = Configuration.GetConnectionString("MsSqlServer");
-            var freeSql = new FreeSql.FreeSqlBuilder()
-                .UseConnectionString(FreeSql.DataType.SqlServer, dbConnectionString)
-                .Build();
-            freeSql.Aop.CurdBefore += (s, e) =>
+
+            services.AddAutoRestfulApi(new AutoApiOption()
             {
-                //¼ÇÂ¼sql
-                Console.WriteLine(e.Sql);
-            };
-            services.AddSingleton<IFreeSql>(freeSql);
-            services.AddAutoRestfulApi();
+                DbMasterConnectionString = dbConnectionString,
+                EnableGetCache = false,
+            });
+                
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

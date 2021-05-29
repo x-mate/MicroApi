@@ -16,11 +16,7 @@ namespace AutoApi.HandleResponse
 
         public override object Execute()
         {
-            var db = GetQueryFactory();
-
-            var table = GetTableName();
-
-            var query = db.Query(table);
+            var query = GetQuery();
 
             foreach (var item in Context.Request.Query)
             {
