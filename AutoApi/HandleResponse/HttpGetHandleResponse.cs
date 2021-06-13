@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.SqlClient;
 using System.Linq;
-using FirebirdSql.Data.FirebirdClient;
 using FreeRedis;
-using FreeSql;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Options;
-using MySqlConnector;
-using Npgsql;
-using Oracle.ManagedDataAccess.Client;
-using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace AutoApi.HandleResponse

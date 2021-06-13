@@ -1,5 +1,4 @@
-using System;
-using FreeRedis;
+using FreeSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace AutoApi.Demo
 {
@@ -42,6 +40,7 @@ namespace AutoApi.Demo
             services.AddAutoRestfulApi(new AutoApiOption()
             {
                 DbMasterConnectionString = dbConnectionString,
+                DbType = DataType.SqlServer,
                 EnableGetCache = false,
             });
                 

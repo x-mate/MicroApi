@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System.Reflection;
 using FreeSql;
-using Microsoft.Extensions.Configuration;
 
 namespace AutoApi
 {
     public class AutoApiOption
     {
+        public AutoApiMode Mode { get; set; } = AutoApiMode.DatabaseFirst;
         /// <summary>
         /// 数据库类型
         /// </summary>
@@ -30,5 +30,19 @@ namespace AutoApi
         /// 缓存有效期，单位：秒，默认1800秒；
         /// </summary>
         public int CacheExpiredSeconds { get; set; } = 1800;
+    }
+    /// <summary>
+    /// 接口模式枚举
+    /// </summary>
+    public enum AutoApiMode
+    {
+        /// <summary>
+        /// 根据已定义的实体模型自动生成对应的数据表，再生成对应的接口
+        /// </summary>
+        CodeFirst,
+        /// <summary>
+        /// 根据已定义的数据库直接生成对应的接口
+        /// </summary>
+        DatabaseFirst
     }
 }

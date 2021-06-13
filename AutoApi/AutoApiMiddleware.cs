@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoApi.HandleResponse;
 using FreeRedis;
+using FreeSql.DataAnnotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -99,6 +100,7 @@ namespace AutoApi
                 //记录sql
                 Console.WriteLine(e.Sql);
             };
+
             services.AddSingleton<IFreeSql>(freeSql);
 
             if (option.EnableGetCache && option.RedisConnectionStrings?.Length>0)

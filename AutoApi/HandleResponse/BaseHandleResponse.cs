@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.SqlClient;
-using System.Net;
 using FirebirdSql.Data.FirebirdClient;
 using FreeSql;
 using Microsoft.AspNetCore.Http;
