@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public interface IHandleResponse
     {

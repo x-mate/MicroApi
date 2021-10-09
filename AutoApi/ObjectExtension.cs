@@ -15,7 +15,7 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace AutoApi
+namespace AutoApi.Core
 {
     public static class ObjectExtension
     {

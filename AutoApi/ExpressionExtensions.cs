@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Newtonsoft.Json;
 
-namespace AutoApi
+namespace AutoApi.Core
 {
     /// <summary>
     /// 表达式树常用扩展方法

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SqlKata.Execution;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public class HttpDeleteHandleResponse : BaseHandleResponse
     {

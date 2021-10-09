@@ -3,7 +3,7 @@ using System.Reflection;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public class HandleResponseFactory
     {

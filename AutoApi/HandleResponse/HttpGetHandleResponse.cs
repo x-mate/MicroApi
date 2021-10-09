@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FreeRedis;
 using Microsoft.AspNetCore.Http;
 using SqlKata.Execution;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public class HttpGetHandleResponse:BaseHandleResponse
     {
@@ -116,24 +113,6 @@ namespace AutoApi.HandleResponse
                 if (!offset.HasValue)
                     offset = ((page ?? 1) - 1) * (size ?? 10);
                 query = query.Skip(offset.Value).Take(size ?? 10);
-            }
-
-            if (ApiOption != null && ApiOption.EnableGetCache)
-            {
-                var redisClient = (RedisClient) Context.RequestServices.GetService(typeof(RedisClient));
-                if (redisClient != null)
-                {
-                    var cacheKey = new CacheKey(TableName, Context.Request.Query.Keys.ToArray(),
-                        Context.Request.Query.Select(q => q.Value.ToString()).ToArray()).GetCacheKey();
-                    var cacheValue = redisClient.Get<IEnumerable<dynamic>>(cacheKey);
-                    if (cacheValue == null)
-                    {
-                        cacheValue = query.Get();
-                        redisClient.Set(cacheKey, cacheValue, ApiOption.CacheExpiredSeconds);
-                    }
-
-                    return cacheValue;
-                }
             }
             
             var dt = query.Get();

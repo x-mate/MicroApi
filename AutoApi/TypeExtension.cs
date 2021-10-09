@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AutoApi
+namespace AutoApi.Core
 {
     /// <summary>
     /// Type类的扩展方法
@@ -17,9 +17,10 @@ namespace AutoApi
             return (type == typeof(object) || Type.GetTypeCode(type) != TypeCode.Object);
         }
 
-        public static bool IsNullable(this Type type){
-            if(type==null) throw new ArgumentNullException(nameof(type));
-            return type.IsGenericType && type.GetGenericTypeDefinition()==typeof(Nullable<>);
+        public static bool IsNullable(this Type type)
+        {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
     }
 }

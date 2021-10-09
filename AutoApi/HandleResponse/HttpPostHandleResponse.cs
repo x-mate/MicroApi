@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SqlKata.Execution;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public class HttpPostHandleResponse:BaseHandleResponse
     {

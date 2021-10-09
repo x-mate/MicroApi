@@ -1,4 +1,3 @@
-using FreeSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -6,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using AutoApi.Core;
 
 namespace AutoApi.Demo
 {
@@ -39,9 +39,8 @@ namespace AutoApi.Demo
 
             services.AddAutoRestfulApi(new AutoApiOption()
             {
-                DbMasterConnectionString = dbConnectionString,
+                DbConnectionString = dbConnectionString,
                 DbType = DataType.SqlServer,
-                EnableGetCache = false,
             });
                 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

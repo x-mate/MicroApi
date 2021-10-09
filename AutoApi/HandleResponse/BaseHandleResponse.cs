@@ -2,7 +2,6 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 using FirebirdSql.Data.FirebirdClient;
-using FreeSql;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Options;
@@ -13,7 +12,7 @@ using SqlKata;
 using SqlKata.Compilers;
 using SqlKata.Execution;
 
-namespace AutoApi.HandleResponse
+namespace AutoApi.Core.HandleResponse
 {
     public abstract class BaseHandleResponse : IHandleResponse
     {
@@ -53,14 +52,12 @@ namespace AutoApi.HandleResponse
 
         protected Query GetQuery()
         {
-            var freeSql = (IFreeSql) Context.RequestServices.GetService(typeof(IFreeSql));
-
-            var conStr = freeSql.Ado.ConnectionString;
+            var conStr = ApiOption.DbConnectionString;
 
             DbConnection connection;
             Compiler compiler;
 
-            switch (freeSql.Ado.DataType)
+            switch (ApiOption.DbType)
             {
                 case DataType.Firebird:
                     connection = new FbConnection(conStr);
