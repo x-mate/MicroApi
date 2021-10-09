@@ -22,4 +22,4 @@ jobs:
     - name: Pack
       run: dotnet pack "AutoApi/AutoApi.Core.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
     - name: Publish
-      run: dotnet nuget push "nupkgs/AutoApi.Core.1.0.0.nupkg" --skip-duplicate --api-key oy2irsgtchjxgn24iz2aotr6su7hjgse3b6w6zqn5re6qi --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.Core.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
