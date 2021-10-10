@@ -10,6 +10,15 @@ using System.Threading.Tasks;
 using AutoApi.Core.HandleResponse;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using SqlKata.Execution;
+using System.Data.Common;
+using SqlKata.Compilers;
+using FirebirdSql.Data.FirebirdClient;
+using System.Data.SqlClient;
+using Microsoft.Data.Sqlite;
+using MySqlConnector;
+using Oracle.ManagedDataAccess.Client;
+using Npgsql;
 
 namespace AutoApi.Core
 {
@@ -43,7 +52,7 @@ namespace AutoApi.Core
 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
 
-                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.GetEncoding("GB2312"));
+                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.Default);
             }
             catch (Exception e)
             {
@@ -54,7 +63,7 @@ namespace AutoApi.Core
                     data = e
                 };
                 context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.GetEncoding("GB2312"));
+                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.Default);
             }
 
         }
@@ -83,12 +92,70 @@ namespace AutoApi.Core
             if (option.DbConnectionString.IsNullOrWhiteSpace())
                 throw new ArgumentNullException(nameof(option.DbConnectionString));
 
-            services.Configure<AutoApiOption>(opt =>
-            {
-                opt = option;
-            });
+            var queryFactory = BuildQuery(option);
+
+            services.AddSingleton(option);
+            services.AddSingleton(queryFactory);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
+            services.AddScoped<IHttpGetHandleResponse, HttpGetHandleResponse>();
+            services.AddScoped<IHttpPostHandleResponse, HttpPostHandleResponse>();
+            services.AddScoped<IHttpPutHandleResponse, HttpPutHandleResponse>();
+            services.AddScoped<IHttpDeleteHandleResponse, HttpDeleteHandleResponse>();
 
             return services;
+        }
+
+        static QueryFactory BuildQuery(AutoApiOption option)
+        {
+            var conStr = option.DbConnectionString;
+
+            DbConnection connection;
+            Compiler compiler;
+
+            switch (option.DbType)
+            {
+                case DataType.Firebird:
+                    connection = new FbConnection(conStr);
+                    compiler = new FirebirdCompiler();
+                    break;
+                case DataType.SqlServer:
+                    connection = new SqlConnection(conStr);
+                    compiler = new SqlServerCompiler();
+                    break;
+                case DataType.Sqlite:
+                    connection = new SqliteConnection(conStr);
+                    compiler = new SqliteCompiler();
+                    break;
+                case DataType.MySql:
+                    connection = new MySqlConnection(conStr);
+                    compiler = new MySqlCompiler();
+                    break;
+                case DataType.Oracle:
+                    connection = new OracleConnection(conStr);
+                    compiler = new OracleCompiler();
+                    break;
+                case DataType.PostgreSQL:
+                    connection = new NpgsqlConnection(conStr);
+                    compiler = new PostgresCompiler();
+                    break;
+                default:
+                    throw new NotSupportedException("暂不支持当前数据库");
+            }
+
+
+            var db = new QueryFactory(connection, compiler)
+            {
+                Logger = q =>
+                {
+                    var oldColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine(q.Sql);
+                    Console.ForegroundColor = oldColor;
+                }
+            };
+            return db;
         }
 
         public static IApplicationBuilder UseAutoRestfulApi(this IApplicationBuilder app)

@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.0.1</Version>
+    <Authors>zengxw</Authors>
+    <Description>基于SqlKata Query Builder的可根据数据表自动生成Restful API的.net5中间件</Description>
   </PropertyGroup>
 
   <ItemGroup>

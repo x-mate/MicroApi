@@ -19,14 +19,14 @@ namespace AutoApi.Core.HandleResponse
         public HttpContext Context { get; set; }
         public abstract object Execute();
         public string TableName { get; }
-        public AutoApiOption ApiOption { get; set; }
 
-        public BaseHandleResponse(HttpContext context)
+        public QueryFactory Query { get; set; }
+
+        public BaseHandleResponse(IHttpContextAccessor contextAccessor, QueryFactory query)
         {
-            this.Context = context;
+            this.Context = contextAccessor.HttpContext;
+            this.Query = query;
             this.TableName = GetTableName();
-            this.ApiOption =
-                ((IOptions<AutoApiOption>) context.RequestServices.GetService(typeof(IOptions<AutoApiOption>)))?.Value;
         }
 
         private string GetTableName()
@@ -47,59 +47,6 @@ namespace AutoApi.Core.HandleResponse
 
             return table;
         }
-
-
-
-        protected Query GetQuery()
-        {
-            var conStr = ApiOption.DbConnectionString;
-
-            DbConnection connection;
-            Compiler compiler;
-
-            switch (ApiOption.DbType)
-            {
-                case DataType.Firebird:
-                    connection = new FbConnection(conStr);
-                    compiler = new FirebirdCompiler();
-                    break;
-                case DataType.SqlServer:
-                    connection = new SqlConnection(conStr);
-                    compiler = new SqlServerCompiler();
-                    break;
-                case DataType.Sqlite:
-                    connection = new SqliteConnection(conStr);
-                    compiler = new SqliteCompiler();
-                    break;
-                case DataType.MySql:
-                    connection = new MySqlConnection(conStr);
-                    compiler = new MySqlCompiler();
-                    break;
-                case DataType.Oracle:
-                    connection = new OracleConnection(conStr);
-                    compiler = new OracleCompiler();
-                    break;
-                case DataType.PostgreSQL:
-                    connection = new NpgsqlConnection(conStr);
-                    compiler = new PostgresCompiler();
-                    break;
-                default:
-                    throw new NotSupportedException("暂不支持当前数据库");
-            }
-
-
-            var db = new QueryFactory(connection, compiler)
-            {
-                Logger = q =>
-                {
-                    var oldColor = Console.ForegroundColor;
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine(q.Sql);
-                    Console.ForegroundColor = oldColor;
-                }
-            };
-
-            return db.Query(this.TableName);
-        }
+        protected Query GetQuery()=> Query.Query(this.TableName);
     }
 }

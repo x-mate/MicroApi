@@ -4,9 +4,14 @@ using SqlKata.Execution;
 
 namespace AutoApi.Core.HandleResponse
 {
-    public class HttpGetHandleResponse:BaseHandleResponse
+    public interface IHttpGetHandleResponse:IHandleResponse
     {
-        public HttpGetHandleResponse(HttpContext context) : base(context)
+
+    }
+
+    public class HttpGetHandleResponse:BaseHandleResponse,IHttpGetHandleResponse
+    {
+        public HttpGetHandleResponse(IHttpContextAccessor contextAccessor, QueryFactory query) : base(contextAccessor, query)
         {
         }
 

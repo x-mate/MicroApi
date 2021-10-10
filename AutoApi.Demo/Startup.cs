@@ -21,7 +21,7 @@ namespace AutoApi.Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //ÐèÒª´Ó¼ÓÔØÅäÖÃÎÄ¼þappsettings.json
+            //ï¿½ï¿½Òªï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½appsettings.json
             services.AddOptions();
             services.AddSingleton(Configuration);
             services.AddControllers();
@@ -42,8 +42,6 @@ namespace AutoApi.Demo
                 DbConnectionString = dbConnectionString,
                 DbType = DataType.SqlServer,
             });
-                
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
