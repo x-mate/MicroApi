@@ -1,4 +1,4 @@
-[English](https://github.com/x-trip/AutoApi/edit/master/README-EN.md)
+[English](https://github.com/x-trip/AutoApi/blob/master/README-EN.md)
 # AutoApi
  基于[SqlKata Query Builder](https://github.com/sqlkata/querybuilder)的可根据数据表自动生成Restful API的dotnet中间件
 ## 支持的数据库：
