@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 using AutoApi.Core;
+using AutoApi.SqlServer;
 
 namespace AutoApi.Demo
 {
@@ -37,11 +38,8 @@ namespace AutoApi.Demo
         {
             var dbConnectionString = Configuration.GetConnectionString("MsSqlServer");
 
-            services.AddAutoRestfulApi(new AutoApiOption()
-            {
-                DbConnectionString = dbConnectionString,
-                DbType = DataType.SqlServer,
-            });
+            services.AddAutoRestfulApi()
+                .UseSqlServer(dbConnectionString);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

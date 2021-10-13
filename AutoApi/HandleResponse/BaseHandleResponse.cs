@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Data.Common;
-using System.Data.SqlClient;
-using FirebirdSql.Data.FirebirdClient;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Options;
-using MySqlConnector;
-using Npgsql;
-using Oracle.ManagedDataAccess.Client;
 using SqlKata;
-using SqlKata.Compilers;
 using SqlKata.Execution;
 
 namespace AutoApi.Core.HandleResponse

@@ -7,6 +7,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoApi.Core", "AutoApi\Aut
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoApi.Demo", "AutoApi.Demo\AutoApi.Demo.csproj", "{E5E93B62-29EE-43BC-84AF-95CAC8D1B9FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.SqlServer", "AutoApi.SqlServer\AutoApi.SqlServer.csproj", "{DB2E8580-34C7-4AA0-B4A1-408EAA76D95A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.Firebird", "AutoApi.Firebird\AutoApi.Firebird.csproj", "{76202146-50A8-4774-8314-0AECBE571243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.Sqlite", "AutoApi.Sqlite\AutoApi.Sqlite.csproj", "{984B72FA-EE67-46E8-81EA-D851F375B2DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.MySql", "AutoApi.MySql\AutoApi.MySql.csproj", "{57CB4D40-C225-41F4-9D98-A36F9199208B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.Oracle", "AutoApi.Oracle\AutoApi.Oracle.csproj", "{3030A02F-9817-40DD-BD3F-BDB8E0113D55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoApi.PostgreSQL", "AutoApi.PostgreSQL\AutoApi.PostgreSQL.csproj", "{4FE4F85D-5EB7-4A24-9946-8F4A0A1F6B50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +33,30 @@ Global
 		{E5E93B62-29EE-43BC-84AF-95CAC8D1B9FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E5E93B62-29EE-43BC-84AF-95CAC8D1B9FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E5E93B62-29EE-43BC-84AF-95CAC8D1B9FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB2E8580-34C7-4AA0-B4A1-408EAA76D95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB2E8580-34C7-4AA0-B4A1-408EAA76D95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB2E8580-34C7-4AA0-B4A1-408EAA76D95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB2E8580-34C7-4AA0-B4A1-408EAA76D95A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76202146-50A8-4774-8314-0AECBE571243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76202146-50A8-4774-8314-0AECBE571243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76202146-50A8-4774-8314-0AECBE571243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76202146-50A8-4774-8314-0AECBE571243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{984B72FA-EE67-46E8-81EA-D851F375B2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{984B72FA-EE67-46E8-81EA-D851F375B2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{984B72FA-EE67-46E8-81EA-D851F375B2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{984B72FA-EE67-46E8-81EA-D851F375B2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57CB4D40-C225-41F4-9D98-A36F9199208B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57CB4D40-C225-41F4-9D98-A36F9199208B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57CB4D40-C225-41F4-9D98-A36F9199208B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57CB4D40-C225-41F4-9D98-A36F9199208B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3030A02F-9817-40DD-BD3F-BDB8E0113D55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3030A02F-9817-40DD-BD3F-BDB8E0113D55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3030A02F-9817-40DD-BD3F-BDB8E0113D55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3030A02F-9817-40DD-BD3F-BDB8E0113D55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FE4F85D-5EB7-4A24-9946-8F4A0A1F6B50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FE4F85D-5EB7-4A24-9946-8F4A0A1F6B50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FE4F85D-5EB7-4A24-9946-8F4A0A1F6B50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FE4F85D-5EB7-4A24-9946-8F4A0A1F6B50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

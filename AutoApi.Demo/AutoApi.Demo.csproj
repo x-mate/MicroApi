@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoApi.SqlServer\AutoApi.SqlServer.csproj" />
     <ProjectReference Include="..\AutoApi\AutoApi.Core.csproj" />
   </ItemGroup>
 
