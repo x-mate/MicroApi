@@ -19,6 +19,7 @@ A dotnet middleware based on [SqlKata Query Builder](https://github.com/sqlkata/
 
     ``` dotnet add package AutoApi.Core --version 1.0.2 ```
 2. Add database nuget package, such as *[AutoApi.SqlServer](https://www.nuget.org/packages/AutoApi.SqlServer/)*
+   
    ``` Install-Package AutoApi.SqlServer -Version 1.0.0 ```
 
    or
