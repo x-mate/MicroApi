@@ -48,16 +48,16 @@ jobs:
     - name: Pack AutoApi.SqlServer
       run: dotnet pack "AutoApi.SqlServer/AutoApi.SqlServer.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
     - name: Publish AutoApi.Core
-      run: dotnet nuget push "nupkgs/AutoApi.Core.1.0.3.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.Core.1.0.3.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.Firebird
-      run: dotnet nuget push "nupkgs/AutoApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.MySql
-      run: dotnet nuget push "nupkgs/AutoApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.Oracle
-      run: dotnet nuget push "nupkgs/AutoApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.PostgreSQL
-      run: dotnet nuget push "nupkgs/AutoApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.Sqlite
-      run: dotnet nuget push "nupkgs/AutoApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
     - name: Publish AutoApi.SqlServer
-      run: dotnet nuget push "nupkgs/AutoApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2agge7hswmju6mibdamtwqewqzfbpeldjzmtubejv6ri --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/AutoApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
