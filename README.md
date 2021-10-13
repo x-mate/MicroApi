@@ -26,7 +26,7 @@
    or
 
    ``` dotnet add package AutoApi.Core --version 1.0.3 ```
-2. 安装数据库对应类型的nuget包，比SQL Server安装*[AutoApi.SqlServer](https://www.nuget.org/packages/AutoApi.SqlServer/)*
+2. 安装数据库对应类型的nuget包，比SQL Server安装 *[AutoApi.SqlServer](https://www.nuget.org/packages/AutoApi.SqlServer/)*
    
    ``` Install-Package AutoApi.SqlServer -Version 1.0.0 ```
 
