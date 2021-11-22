@@ -17,47 +17,47 @@ jobs:
       uses: actions/setup-dotnet@v1.8.0
       with:
         dotnet-version: 5.0.100
-    - name: Build AutoApi.Core
-      run: dotnet build "AutoApi/AutoApi.Core.csproj" --configuration Release
-    - name: Build AutoApi.Demo
-      run: dotnet build "AutoApi.Demo/AutoApi.Demo.csproj" --configuration Release
-    - name: Build AutoApi.Firebird
-      run: dotnet build "AutoApi.Firebird/AutoApi.Firebird.csproj" --configuration Release
-    - name: Build AutoApi.MySql
-      run: dotnet build "AutoApi.MySql/AutoApi.MySql.csproj" --configuration Release
-    - name: Build AutoApi.Oracle
-      run: dotnet build "AutoApi.Oracle/AutoApi.Oracle.csproj" --configuration Release
-    - name: Build AutoApi.PostgreSQL
-      run: dotnet build "AutoApi.PostgreSQL/AutoApi.PostgreSQL.csproj" --configuration Release
-    - name: Build AutoApi.Sqlite
-      run: dotnet build "AutoApi.Sqlite/AutoApi.Sqlite.csproj" --configuration Release
-    - name: Build AutoApi.SqlServer
-      run: dotnet build "AutoApi.SqlServer/AutoApi.SqlServer.csproj" --configuration Release
-    - name: Pack AutoApi.Core
-      run: dotnet pack "AutoApi/AutoApi.Core.csproj" --configuration Release -p:PackageVersion=1.0.3 --output nupkgs
-    - name: Pack AutoApi.Firebird
-      run: dotnet pack "AutoApi.Firebird/AutoApi.Firebird.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Pack AutoApi.MySql
-      run: dotnet pack "AutoApi.MySql/AutoApi.MySql.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Pack AutoApi.Oracle
-      run: dotnet pack "AutoApi.Oracle/AutoApi.Oracle.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Pack AutoApi.PostgreSQL
-      run: dotnet pack "AutoApi.PostgreSQL/AutoApi.PostgreSQL.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Pack AutoApi.Sqlite
-      run: dotnet pack "AutoApi.Sqlite/AutoApi.Sqlite.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Pack AutoApi.SqlServer
-      run: dotnet pack "AutoApi.SqlServer/AutoApi.SqlServer.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
-    - name: Publish AutoApi.Core
-      run: dotnet nuget push "nupkgs/AutoApi.Core.1.0.3.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.Firebird
-      run: dotnet nuget push "nupkgs/AutoApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.MySql
-      run: dotnet nuget push "nupkgs/AutoApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.Oracle
-      run: dotnet nuget push "nupkgs/AutoApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.PostgreSQL
-      run: dotnet nuget push "nupkgs/AutoApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.Sqlite
-      run: dotnet nuget push "nupkgs/AutoApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
-    - name: Publish AutoApi.SqlServer
-      run: dotnet nuget push "nupkgs/AutoApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Build MicroApi.Core
+      run: dotnet build "MicroApi.Core/MicroApi.Core.csproj" --configuration Release
+    - name: Build MicroApi.Demo
+      run: dotnet build "MicroApi.Demo/MicroApi.Demo.csproj" --configuration Release
+    - name: Build MicroApi.Firebird
+      run: dotnet build "MicroApi.Firebird/MicroApi.Firebird.csproj" --configuration Release
+    - name: Build MicroApi.MySql
+      run: dotnet build "MicroApi.MySql/MicroApi.MySql.csproj" --configuration Release
+    - name: Build MicroApi.Oracle
+      run: dotnet build "MicroApi.Oracle/MicroApi.Oracle.csproj" --configuration Release
+    - name: Build MicroApi.PostgreSQL
+      run: dotnet build "MicroApi.PostgreSQL/MicroApi.PostgreSQL.csproj" --configuration Release
+    - name: Build MicroApi.Sqlite
+      run: dotnet build "MicroApi.Sqlite/MicroApi.Sqlite.csproj" --configuration Release
+    - name: Build MicroApi.SqlServer
+      run: dotnet build "MicroApi.SqlServer/MicroApi.SqlServer.csproj" --configuration Release
+    - name: Pack MicroApi.Core
+      run: dotnet pack "MicroApi/MicroApi.Core.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.Firebird
+      run: dotnet pack "MicroApi.Firebird/MicroApi.Firebird.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.MySql
+      run: dotnet pack "MicroApi.MySql/MicroApi.MySql.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.Oracle
+      run: dotnet pack "MicroApi.Oracle/MicroApi.Oracle.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.PostgreSQL
+      run: dotnet pack "MicroApi.PostgreSQL/MicroApi.PostgreSQL.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.Sqlite
+      run: dotnet pack "MicroApi.Sqlite/MicroApi.Sqlite.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Pack MicroApi.SqlServer
+      run: dotnet pack "MicroApi.SqlServer/MicroApi.SqlServer.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+    - name: Publish MicroApi.Core
+      run: dotnet nuget push "nupkgs/MicroApi.Core.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.Firebird
+      run: dotnet nuget push "nupkgs/MicroApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.MySql
+      run: dotnet nuget push "nupkgs/MicroApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.Oracle
+      run: dotnet nuget push "nupkgs/MicroApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.PostgreSQL
+      run: dotnet nuget push "nupkgs/MicroApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.Sqlite
+      run: dotnet nuget push "nupkgs/MicroApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+    - name: Publish MicroApi.SqlServer
+      run: dotnet nuget push "nupkgs/MicroApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"

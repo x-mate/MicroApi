@@ -1,30 +1,30 @@
-[中文](https://github.com/x-trip/AutoApi/blob/master/README.md)
-# AutoApi
+[中文](https://github.com/x-trip/MicroApi/blob/master/README.md)
+# MicroApi
 A dotnet middleware based on [SqlKata Query Builder](https://github.com/sqlkata/querybuilder) that can automatically generate restful API according to the database
 ## Supported databases：
-1. MySql *[AutoApi.MySql](https://www.nuget.org/packages/AutoApi.MySql/)*
-2. SqlServer *[AutoApi.SqlServer](https://www.nuget.org/packages/AutoApi.SqlServer/)*
-3. PostgreSQL *[AutoApi.PostgreSQL](https://www.nuget.org/packages/AutoApi.PostgreSQL/)*
-4. Oracle *[AutoApi.Oracle](https://www.nuget.org/packages/AutoApi.Oracle/)*
-5. Sqlite *[AutoApi.Sqlite](https://www.nuget.org/packages/AutoApi.Sqlite/)*
-6. Firebird *[AutoApi.Firebird](https://www.nuget.org/packages/AutoApi.Firebird/)*
+1. MySql *[MicroApi.MySql](https://www.nuget.org/packages/MicroApi.MySql/)*
+2. SqlServer *[MicroApi.SqlServer](https://www.nuget.org/packages/MicroApi.SqlServer/)*
+3. PostgreSQL *[MicroApi.PostgreSQL](https://www.nuget.org/packages/MicroApi.PostgreSQL/)*
+4. Oracle *[MicroApi.Oracle](https://www.nuget.org/packages/MicroApi.Oracle/)*
+5. Sqlite *[MicroApi.Sqlite](https://www.nuget.org/packages/MicroApi.Sqlite/)*
+6. Firebird *[MicroApi.Firebird](https://www.nuget.org/packages/MicroApi.Firebird/)*
 ## Sample
-[AutoApi.Demo](https://github.com/x-trip/AutoApi/tree/master/AutoApi.Demo)
+[MicroApi.Demo](https://github.com/x-trip/MicroApi/tree/master/MicroApi.Demo)
 ## How to use
-1.  Add nuget package *[AutoApi.Core](https://www.nuget.org/packages/AutoApi.Core/)*
+1.  Add nuget package *[MicroApi.Core](https://www.nuget.org/packages/MicroApi.Core/)*
 
-    ``` Install-Package AutoApi.Core -Version 1.0.2 ```
+    ``` Install-Package MicroApi.Core -Version 1.0.0 ```
 
     or
 
-    ``` dotnet add package AutoApi.Core --version 1.0.2 ```
-2. Add database nuget package, such as *[AutoApi.SqlServer](https://www.nuget.org/packages/AutoApi.SqlServer/)*
+    ``` dotnet add package MicroApi.Core --version 1.0.0 ```
+2. Add database nuget package, such as *[MicroApi.SqlServer](https://www.nuget.org/packages/MicroApi.SqlServer/)*
    
-   ``` Install-Package AutoApi.SqlServer -Version 1.0.0 ```
+   ``` Install-Package MicroApi.SqlServer -Version 1.0.0 ```
 
    or
 
-   ``` dotnet add package AutoApi.SqlServer --version 1.0.0 ```
+   ``` dotnet add package MicroApi.SqlServer --version 1.0.0 ```
 
 3. Add the following code to the **configureservices** method in the file *startup.cs*:
 

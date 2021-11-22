@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicroApi.Core\MicroApi.Core.csproj" />
+    <ProjectReference Include="..\MicroApi.SqlServer\MicroApi.SqlServer.csproj" />
+  </ItemGroup>
+
+</Project>
