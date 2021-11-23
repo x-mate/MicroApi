@@ -51,7 +51,7 @@ namespace MicroApi.Demo
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MicroApi.Demo v1"));
             }
-
+            app.UsePathBase("");
             app.UseHttpsRedirection();
 
             app.UseRouting();
