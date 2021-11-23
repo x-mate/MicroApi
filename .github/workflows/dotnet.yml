@@ -48,16 +48,16 @@ jobs:
     - name: Pack MicroApi.SqlServer
       run: dotnet pack "MicroApi.SqlServer/MicroApi.SqlServer.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
     - name: Publish MicroApi.Core
-      run: dotnet nuget push "nupkgs/MicroApi.Core.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.Core.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.Firebird
-      run: dotnet nuget push "nupkgs/MicroApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.Firebird.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.MySql
-      run: dotnet nuget push "nupkgs/MicroApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.MySql.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.Oracle
-      run: dotnet nuget push "nupkgs/MicroApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.Oracle.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.PostgreSQL
-      run: dotnet nuget push "nupkgs/MicroApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.PostgreSQL.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.Sqlite
-      run: dotnet nuget push "nupkgs/MicroApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.Sqlite.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
     - name: Publish MicroApi.SqlServer
-      run: dotnet nuget push "nupkgs/MicroApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2igxvfsdvkfthsokwadduen4aeb7luhnmxk3itfdusba --source "https://api.nuget.org/v3/index.json"
+      run: dotnet nuget push "nupkgs/MicroApi.SqlServer.1.0.0.nupkg" --skip-duplicate --api-key oy2pfof4by2kj2f2xuzqy6qaba4mtfjuzevxg2aq2bopgy --source "https://api.nuget.org/v3/index.json"
