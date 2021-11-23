@@ -34,7 +34,7 @@ jobs:
     - name: Build MicroApi.SqlServer
       run: dotnet build "MicroApi.SqlServer/MicroApi.SqlServer.csproj" --configuration Release
     - name: Pack MicroApi.Core
-      run: dotnet pack "MicroApi/MicroApi.Core.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
+      run: dotnet pack "MicroApi.Core/MicroApi.Core.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
     - name: Pack MicroApi.Firebird
       run: dotnet pack "MicroApi.Firebird/MicroApi.Firebird.csproj" --configuration Release -p:PackageVersion=1.0.0 --output nupkgs
     - name: Pack MicroApi.MySql
