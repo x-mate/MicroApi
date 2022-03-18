@@ -38,7 +38,7 @@ namespace MicroApi.Demo
         {
             var dbConnectionString = Configuration.GetConnectionString("MsSqlServer");
 
-            services.AddAutoRestfulApi()
+            services.AddMicroApi()
                 .UseSqlServer(dbConnectionString);
         }
 
@@ -63,7 +63,7 @@ namespace MicroApi.Demo
                 endpoints.MapControllers();
             });
 
-            app.UseAutoRestfulApi();
+            app.UseMicroApi();
         }
     }
 }

@@ -36,6 +36,8 @@ namespace MicroApi.Core
                 return;
             }
 
+            var settings = (JsonSerializerSettings)context.RequestServices.GetService(typeof(JsonSerializerSettings));
+
             try
             {
                 var result = HandleResponseFactory.CreateHandleResponse(context).Execute();
@@ -43,7 +45,7 @@ namespace MicroApi.Core
 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
 
-                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.Default);
+                await context.Response.WriteAsync(HandleResponseContent(response, settings), Encoding.Default);
             }
             catch (Exception e)
             {
@@ -54,24 +56,20 @@ namespace MicroApi.Core
                     data = e
                 };
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.Default);
+                await context.Response.WriteAsync(HandleResponseContent(response, settings), Encoding.Default);
             }
 
         }
 
-        private string HandleResponseContent(object content, string dateFormat = "yyyy-MM-dd")
+        private string HandleResponseContent(object content, JsonSerializerSettings settings)
         {
-            return JsonConvert.SerializeObject(content, Formatting.Indented, settings: new JsonSerializerSettings()
-            {
-                DateFormatString = dateFormat,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
+            return JsonConvert.SerializeObject(content, Formatting.Indented, settings);
         }
     }
 
     public static class AutoApiMiddlewareExtensions
     {
-        public static IServiceCollection AddAutoRestfulApi(this IServiceCollection services)
+        public static IServiceCollection AddMicroApi(this IServiceCollection services, JsonSerializerSettings settings = null)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
 
@@ -82,10 +80,18 @@ namespace MicroApi.Core
             services.AddScoped<IHttpPutHandleResponse, HttpPutHandleResponse>();
             services.AddScoped<IHttpDeleteHandleResponse, HttpDeleteHandleResponse>();
 
+            if (settings == null)
+                settings = new JsonSerializerSettings()
+                {
+                    DateFormatString = "yyyy-MM-dd",
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+            services.AddSingleton(settings);
+
             return services;
         }
 
-        public static IApplicationBuilder UseAutoRestfulApi(this IApplicationBuilder app)
+        public static IApplicationBuilder UseMicroApi(this IApplicationBuilder app)
         {
             app.Map("/api", config =>
             {
