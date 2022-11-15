@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;</TargetFrameworks>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.0.0.2</Version>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
+    <Version>1.0.0.3</Version>
     <Authors>zengxw</Authors>
     <Description>基于SqlKata Query Builder的可根据数据表自动生成Restful API的dotnet中间件</Description>
-    <Copyright>1.0.0.2</Copyright>
+    <Copyright>1.0.0.3</Copyright>
     <PackageReleaseNotes>add authorization filter</PackageReleaseNotes>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
