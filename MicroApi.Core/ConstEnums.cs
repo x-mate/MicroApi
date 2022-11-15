@@ -21,4 +21,16 @@ namespace MicroApi.Core
         //     Firebird 是一个跨平台的关系数据库，能作为多用户环境下的数据库服务器运行，也提供嵌入式数据库的实现
         Firebird = 5,
     }
+
+    public enum AuthorizeType
+    {
+        /// <summary>
+        /// 不需要认证
+        /// </summary>
+        None = 0,
+        /// <summary>
+        /// JWT认证
+        /// </summary>
+        JWT
+    }
 }

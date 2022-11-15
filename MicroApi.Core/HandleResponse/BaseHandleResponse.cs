@@ -9,7 +9,7 @@ namespace MicroApi.Core.HandleResponse
     {
         public HttpContext Context { get; set; }
         public abstract object Execute();
-        public string TableName { get; }
+        public string TableName { get; set; }
 
         public QueryFactory Query { get; set; }
 
@@ -35,9 +35,8 @@ namespace MicroApi.Core.HandleResponse
             {
                 throw new Exception("非法请求，api请求路径格式为/api/{TableName},且TableName不能为空。");//api请求路径格式为/api/{TableName}
             }
-
             return table;
         }
-        protected Query GetQuery() => Query.Query(TableName);
+        protected Query GetQuery() => Query.Query().From(TableName);
     }
 }

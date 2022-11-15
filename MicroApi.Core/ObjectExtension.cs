@@ -612,7 +612,9 @@ namespace MicroApi.Core
             var bf = new BinaryFormatter();
             using (var ms = new MemoryStream())
             {
+#pragma warning disable SYSLIB0011 // 类型或成员已过时
                 bf.Serialize(ms, obj);
+#pragma warning restore SYSLIB0011 // 类型或成员已过时
                 return ms.ToArray();
             }
         }
@@ -624,7 +626,9 @@ namespace MicroApi.Core
                 var bf = new BinaryFormatter();
                 memStream.Write(source, 0, source.Length);
                 memStream.Seek(0, SeekOrigin.Begin);
+#pragma warning disable SYSLIB0011 // 类型或成员已过时
                 var obj = bf.Deserialize(memStream);
+#pragma warning restore SYSLIB0011 // 类型或成员已过时
                 return obj;
             }
         }

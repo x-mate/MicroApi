@@ -10,13 +10,20 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using MicroApi.Core.HandleResponse;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MicroApi.Core
 {
     public class MicroApiMiddleware : BaseMiddleware
     {
-        public MicroApiMiddleware(RequestDelegate next) : base(next)
+        private readonly IAuthorizationService _authService;
+        private readonly MicroApiOption _apiOption;
+        public MicroApiMiddleware(RequestDelegate next, 
+            IAuthorizationService authorizationService,
+            MicroApiOption apiOption) : base(next)
         {
+            _authService = authorizationService;
+            _apiOption = apiOption;
         }
 
         public override async Task Invoke(HttpContext context)
@@ -36,16 +43,23 @@ namespace MicroApi.Core
                 return;
             }
 
-            var settings = (JsonSerializerSettings)context.RequestServices.GetService(typeof(JsonSerializerSettings));
-
             try
             {
-                var result = HandleResponseFactory.CreateHandleResponse(context).Execute();
-                var response = new { success = true, data = result };
-
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-
-                await context.Response.WriteAsync(HandleResponseContent(response, settings), Encoding.Default);
+                var handler = HandleResponseFactory.CreateHandleResponse(context);
+                var gb2312 = Encoding.GetEncoding("GB2312");
+                if (_apiOption.AuthorizeType != AuthorizeType.None 
+                    && !(await _authService.AuthorizeAsync(context.User, handler, MicroApiOperations.GetOperation(context.Request.Method))).Succeeded)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    await context.Response.WriteAsync(HandleResponseContent(new { success = false, error = "Unauthorized" }), gb2312);
+                }
+                else
+                {
+                    var result = handler.Execute();
+                    var response = new { success = true, data = result };
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    await context.Response.WriteAsync(HandleResponseContent(response), gb2312);
+                }
             }
             catch (Exception e)
             {
@@ -53,40 +67,43 @@ namespace MicroApi.Core
                 var response = new
                 {
                     success = false,
-                    data = e
+                    error = e
                 };
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsync(HandleResponseContent(response, settings), Encoding.Default);
+                await context.Response.WriteAsync(HandleResponseContent(response), Encoding.GetEncoding("GB2312"));
             }
 
         }
 
-        private string HandleResponseContent(object content, JsonSerializerSettings settings)
+        private string HandleResponseContent(object content)
         {
-            return JsonConvert.SerializeObject(content, Formatting.Indented, settings);
+            return JsonConvert.SerializeObject(content, Formatting.Indented, _apiOption.JsonSerializerSettings);
         }
     }
 
     public static class AutoApiMiddlewareExtensions
     {
-        public static IServiceCollection AddMicroApi(this IServiceCollection services, JsonSerializerSettings settings = null)
+        public static IServiceCollection AddMicroApi(this IServiceCollection services, Action<MicroApiOption> option = null)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-
+            var defaultOption = new MicroApiOption()
+            {
+                AuthorizeType = AuthorizeType.None,
+                JsonSerializerSettings = new JsonSerializerSettings()
+                {
+                    DateFormatString = "yyyy-MM-dd HH:mm:ss",
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
+            };
+            if (option != null)
+                option.Invoke(defaultOption);
+            services.AddSingleton(defaultOption);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddScoped<IHttpGetHandleResponse, HttpGetHandleResponse>();
             services.AddScoped<IHttpPostHandleResponse, HttpPostHandleResponse>();
             services.AddScoped<IHttpPutHandleResponse, HttpPutHandleResponse>();
             services.AddScoped<IHttpDeleteHandleResponse, HttpDeleteHandleResponse>();
-
-            if (settings == null)
-                settings = new JsonSerializerSettings()
-                {
-                    DateFormatString = "yyyy-MM-dd",
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                };
-            services.AddSingleton(settings);
 
             return services;
         }

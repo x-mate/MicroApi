@@ -12,6 +12,6 @@ namespace MicroApi.Core.HandleResponse
     {
         HttpContext Context { get; set; }
         object Execute();
-        string TableName { get; }
+        string TableName { get; set; }
     }
 }
