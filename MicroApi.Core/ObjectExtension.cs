@@ -7,8 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+#if NETSTANDARD2_0_OR_GREATER
+using System.Runtime.Serialization.Formatters.Binary;
+#endif
+#if NET5_0_OR_GREATER
+using System.Text.Json.Serialization;
+using System.Text.Json;
+#endif
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -609,30 +615,50 @@ namespace MicroApi.Core
         {
             if (obj == null)
                 return null;
+#if NETSTANDARD2_0_OR_GREATER
             var bf = new BinaryFormatter();
             using (var ms = new MemoryStream())
             {
-#pragma warning disable SYSLIB0011 // 类型或成员已过时
                 bf.Serialize(ms, obj);
-#pragma warning restore SYSLIB0011 // 类型或成员已过时
                 return ms.ToArray();
             }
+#endif
+#if NET5_0_OR_GREATER
+            return Encoding.UTF8.GetBytes(JsonSerializer.Serialize(obj, GetJsonSerializerOptions()));
+#endif
         }
 
         public static object ToObject(this byte[] source)
         {
+            if (source == null || !source.Any())
+                return default;
+#if NETSTANDARD2_0_OR_GREATER
             using (var memStream = new MemoryStream())
             {
                 var bf = new BinaryFormatter();
                 memStream.Write(source, 0, source.Length);
                 memStream.Seek(0, SeekOrigin.Begin);
-#pragma warning disable SYSLIB0011 // 类型或成员已过时
                 var obj = bf.Deserialize(memStream);
-#pragma warning restore SYSLIB0011 // 类型或成员已过时
                 return obj;
             }
+#endif
+#if NET5_0_OR_GREATER
+            return JsonSerializer.Deserialize<object>(source, GetJsonSerializerOptions());
+#endif
         }
 
+#if NET5_0_OR_GREATER
+        private static JsonSerializerOptions GetJsonSerializerOptions()
+        {
+            return new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = null,
+                WriteIndented = true,
+                AllowTrailingCommas = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            };
+        }
+#endif
         /// <summary>
         /// 将object转换为char类型信息。
         /// </summary>
