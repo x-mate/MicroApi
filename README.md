@@ -36,14 +36,14 @@
 3. 在文件Startup.cs中的ConfigureServices方法中添加如下代码：
 
    ```
-   services.AddAutoRestfulApi()
+   services.AddMicroApi()
            .UseSqlServer(connectionString);//Your sql server database connection string
    ```
 
 4. 在文件Startup.cs中的Configure方法中添加如下代码：
 
    ```
-   app.UseAutoRestfulApi();
+   app.UseMicroApi();
    ```
 ## API内置格式
 生成api的访问路径统一为：/api/{TableName}
