@@ -13,6 +13,12 @@
 5. Sqlite *[MicroApi.Sqlite](https://www.nuget.org/packages/MicroApi.Sqlite/)*
 6. Firebird *[MicroApi.Firebird](https://www.nuget.org/packages/MicroApi.Firebird/)*
 
+## 接口认证中间件
+
+**目前仅支持JWT方式**
+
+*[MicroApi.Authorization](https://www.nuget.org/packages/MicroApi.Authorization)*
+
 ## 示例
 
 [MicroApi.Demo](https://github.com/x-trip/MicroApi/tree/master/MicroApi.Demo)
@@ -37,7 +43,8 @@
 
    ```
    services.AddMicroApi()
-           .UseSqlServer(connectionString);//Your sql server database connection string
+           .UseSqlServer(connectionString)//Your sql server database connection string
+           .AddMicroApiAuthorization();//添加接口认证中间件
    ```
 
 4. 在文件Startup.cs中的Configure方法中添加如下代码：
