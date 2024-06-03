@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using MicroApi.Core.HandleResponse;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
 namespace MicroApi.Core
 {
@@ -38,7 +39,7 @@ namespace MicroApi.Core
 
             var pathBase = context.Request.PathBase;
             var path = context.Request.Path;
-            if (!pathBase.HasValue || !"/api".Equals(pathBase.Value, StringComparison.OrdinalIgnoreCase) || !path.HasValue)
+            if (!pathBase.HasValue || !pathBase.Value.Contains(_apiOption.ApiRoutePrefix, StringComparison.OrdinalIgnoreCase) || !path.HasValue)
             {
                 return;
             }
@@ -86,17 +87,11 @@ namespace MicroApi.Core
         public static IServiceCollection AddMicroApi(this IServiceCollection services, Action<MicroApiOption> option = null)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            var defaultOption = new MicroApiOption()
-            {
-                AuthorizeType = AuthorizeType.None,
-                JsonSerializerSettings = new JsonSerializerSettings()
-                {
-                    DateFormatString = "yyyy-MM-dd HH:mm:ss",
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
+            var defaultOption = new MicroApiOption();
             if (option != null)
                 option.Invoke(defaultOption);
+            if (defaultOption.ApiRoutePrefix.IsNullOrWhiteSpace())
+                throw new Exception("The option MicroApiOption.ApiRoutePrefix can not be null or empty.");
             services.AddSingleton(defaultOption);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -110,7 +105,9 @@ namespace MicroApi.Core
 
         public static IApplicationBuilder UseMicroApi(this IApplicationBuilder app)
         {
-            app.Map("/api", config =>
+            var option = (IOptions<MicroApiOption>)app.ApplicationServices.GetService(typeof(IOptions<MicroApiOption>));
+            var pathMatch = $"/{option?.Value?.ApiRoutePrefix}/" + "{controller}";
+            app.Map(pathMatch, config =>
             {
                 config.UseMiddleware<MicroApiMiddleware>();
             });
